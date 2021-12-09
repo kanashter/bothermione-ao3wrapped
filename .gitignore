@@ -1,0 +1,8 @@
+/node_modules/
+/public/build/
+
+.DS_Store
+
+out/
+/ao3_flaskserver
+/venv
