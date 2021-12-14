@@ -16,7 +16,8 @@ const createWindow = () => {
 
 let window = null;
 
-var subpy = require("child_process").execFile("./ao3_flaskserver/ao3.exe");
+const fileLoc = __dirname + "\\ao3_flaskserver\\ao3.exe";
+var subpy = require("child_process").execFile(fileLoc);
 
 app.whenReady().then(createWindow);
 app.on("window-all-closed", () => app.quit());

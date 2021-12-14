@@ -32,7 +32,14 @@ def get_pages(base_url, session):
     return [*range(1, max_pages+1)]
 
 def get_fics(base_url, session):
-    request = session.get(base_url)
+    while True:
+        request = session.get(base_url)
+        if request.status_code == 200:
+            break
+        else:
+            time.sleep(300)
+            continue
+
     soup = BeautifulSoup(request.content, 'html.parser')
     works = soup.find("ol", { "class": "reading work index group" })
     all_fics = []
@@ -112,6 +119,7 @@ def load_data(username, password):
                     all_breaks.append(False)
                 else:
                     all_breaks.append(True)
+            time.sleep(5)
         except:
             pass
 
