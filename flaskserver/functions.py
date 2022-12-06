@@ -47,7 +47,7 @@ def get_fics(base_url, session):
     for i in fics:
         try:
             temp_fic = fic_check(i)
-            if temp_fic['dt'] >= datetime(2021, 1, 1, 0, 0):
+            if temp_fic['dt'] >= datetime(2022, 1, 1, 0, 0):
                 all_fics.append(temp_fic)
             else:
                 break
