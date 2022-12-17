@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 import pandas as pd
 import json
+import time
 
 def return_session(username, password):
     s = requests.Session()
@@ -31,7 +32,7 @@ def get_pages(base_url, session):
     max_pages = int(all_pages[-2])
     return [*range(1, max_pages+1)]
 
-def get_fics(base_url, session):
+def get_fics(base_url, session, start_date, end_date):
     while True:
         request = session.get(base_url)
         if request.status_code == 200:
@@ -47,8 +48,11 @@ def get_fics(base_url, session):
     for i in fics:
         try:
             temp_fic = fic_check(i)
-            if temp_fic['dt'] >= datetime(2021, 1, 1, 0, 0):
-                all_fics.append(temp_fic)
+            if temp_fic['dt'] >= start_date:
+                if temp_fic['dt'] <= end_date:
+                    all_fics.append(temp_fic)
+                else: 
+                    pass
             else:
                 break
         except:
@@ -103,7 +107,7 @@ def fic_check(soup):
     return details
 
 
-def load_data(username, password):
+def load_data(username, password, start_date, end_date):
     session = return_session(username, password)
     base_url = f"https://archiveofourown.org/users/{username}/readings"
     all_pages = get_pages(base_url, session)
@@ -112,14 +116,13 @@ def load_data(username, password):
     for i in all_pages:
         try:
             fics_url = base_url + f"?page={i}"
-            fics = get_fics(fics_url, session)
+            fics = get_fics(fics_url, session, start_date, end_date)
             for fic in fics:
                 all_fics.append(fic)
-                if fic["dt"] >= datetime(2021, 1, 1):
+                if fic["dt"] >= start_date:
                     all_breaks.append(False)
                 else:
                     all_breaks.append(True)
-            time.sleep(5)
         except:
             pass
 
@@ -129,8 +132,11 @@ def load_data(username, password):
 
     return all_fics
 
-def resolve_request(username, password):
-    raw_data = load_data(username, password)
+def resolve_request(username, password, start_date, end_date):
+    start_date_dt = datetime.strptime(start_date, '%Y-%m-%d')
+    end_date_dt = datetime.strptime(end_date, '%Y-%m-%d')
+    print(start_date_dt, end_date_dt)
+    raw_data = load_data(username, password, start_date_dt, end_date_dt)
     frame = pd.DataFrame(raw_data)
     most_visited = frame[frame.visited == frame.visited.max()]
 

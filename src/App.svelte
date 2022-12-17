@@ -4,7 +4,7 @@
 	let p;
 
 	async function getWrapped(u, p) {
-		let url = `http://127.0.0.1:5001/?username=${u}&password=${p}`;
+		let url = `http://127.0.0.1:5001/?username=${u}&password=${p}&start_date=2022-01-01&end_date=2022-12-31`;
 		let request = await fetch(url, {
 			method: 'get'
 		});
@@ -13,7 +13,50 @@
 	}
 
 	function randomEmoji() {
-		let array = ['🥵', '💦', '🍆', '🥺', '🍌', '🍑', '😉', '🤤', '👅', '👀', '😳', '💆'];
+		let array = [
+			'😘💋',
+			'😍',
+			'❤️‍🔥',
+			'🍌🍒',
+			'🥤',
+			'🚿',
+			'🧎‍♀️',
+			'😤',
+			'🤯',
+			'👩‍🏫',
+			'🌶',
+			'🦴',
+			'🍭',
+			'🥅',
+			'🙏🏼',
+			'🥨',
+			'🔩',
+			'🔨',
+			'😭',
+			'🔥',
+			'🎷',
+			'🥴',
+			'😵‍',
+			'😇',
+			'😏',
+			'🍆',
+			'🍑',
+			'🐱',
+			'💦',
+			'📫',
+			'👉👌',
+			'😛',
+			'🥵',
+			'🤠',
+			'👀',
+			'😈',
+			'🤡',
+			'😊',
+			'🥺',
+			'👅',
+			'😳',
+			'💆'
+		];
 
 		return array[Math.floor(Math.random() * array.length)];
 	}
@@ -24,6 +67,12 @@
 
 	function randomString() {
 		let array = [
+			'Damn that looks like a good story',
+			'Really?',
+			"If you quickly google therapy hotlines and give the first one that shows up a call, I reckon they'd be able to help",
+			'We finally got out of a global pandemic and this is the choice you made',
+			'I should probably have put more thought into this bot',
+			'There comes a time in everyones life where they simply must look at the world around them and ask, "why"',
 			'Must be a great read',
 			'Might have to look into that myself',
 			'Do you need help? I think you might need help',
@@ -33,12 +82,21 @@
 			"'Only Big Brain Winners read fanfic' - Albert Einstien",
 			"'Yes we can, we can read fanfic' - Barack Obama",
 			"'I have a dream, that one day Childhood friends and Enemies to lovers can sit at the same table for romance' - Martin Luther Kink Jr.",
-			'These are you 95 Thesis nailed to the door of the internet',
-			'get busy readin or get busy dyin',
-			"you're here to eat ass and read fanfic, and your all out of fanfic",
+			'These are your 95 Theses nailed to the door of the internet',
+			"get busy readin' or get busy dyin'",
+			"you're here to eat ass and read fanfic, and you're all out of fanfic",
 			'Make sure you left a comment telling the author how much you love it!'
 		];
 		return array[Math.floor(Math.random() * array.length)];
+	}
+
+	function generateRandomEmojiString() {
+		let str = '';
+		const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+		for (let i in array) {
+			str = str + randomEmoji();
+		}
+		return str;
 	}
 </script>
 
@@ -48,7 +106,9 @@
 
 <div class="wrapper">
 	<h1>WRAPPED</h1>
-	<img src="https://www.bothermione.com/images/logo.jpg" alt="BotHermione">
+	<div class="imgWrapper">
+		<img src="https://www.bothermione.com/images/logo.jpg" alt="BotHermione">
+	</div>
 	<div class="container">
 		<p>Look mum I'm a real developer now edition</p>
 		<p>
@@ -69,8 +129,8 @@
 		<p>Found this useful? Feel free to <a href="https://twitter.com/bothermione">let me know</a></p>
 		<p>
 			But, if you're feeling brave - please log in below and see all the grimy details about your
-			2021 on AO3
-		</p>
+			2022 on AO3
+		</p>	
 	</div>
 	{#if loaded == true}
 		<div class="container">
@@ -91,31 +151,35 @@
 								up babes.
 							</h2>
 						{/if}
+						<h2>{randomEmoji()}</h2>
 					</div>
 					<div class="wrapped-2">
 						<h3>
 							There was one fic you read more than any other. <br /><br />
 						</h3>
 						<h1>
-							❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️<br />
+							{generateRandomEmojiString()}<br />
 							<i>{data.most_visited.title}</i><br />
 							by
 							<i>{data.most_visited.author}</i>
 							<br />
-							❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️
+							{generateRandomEmojiString()}
 						</h1>
 						.
 						<h3>
-							<br />You went back to it {data.most_visited.count}
+							<br />You went back to it {commaNum(data.most_visited.count)}
 							times.
 							<br />
 							{randomString()}
 						</h3>
+						<h2>{randomEmoji()}</h2>
 					</div>
 					<div class="wrapped-3">
 						<div class="left">
 							<h3>
-								There were some characters who appeared more than anyone else in what you read.
+								These are the characters that showed up the most.
+								<br />
+								{randomEmoji()}
 							</h3>
 						</div>
 						<div class="right">
@@ -139,12 +203,16 @@
 							{/each}
 						</div>
 						<div class="right-alt">
-							<h3>There were some relationships you liked more than others</h3>
+							<h3>Some relationships seemed to grip you more than others</h3>
+							<br />
+							{randomEmoji()}
 						</div>
 					</div>
 					<div class="wrapped-5">
 						<div class="left">
-							<h3>And the fics you read had some pretty consistent themes...</h3>
+							<h3>And man, these topics had you on the edge of your seat</h3>
+							<br />
+							{randomEmoji()}
 						</div>
 						<div class="right">
 							{#each data.most_visited.tags as tag, i}
@@ -154,13 +222,14 @@
 					</div>
 				</div>
 			{:catch}
-				<div class="container login">
-					<h1>
-						Looks like there was a server error! If you're positive you got your password right,
-						please try again later!
-					</h1>
-					<button on:click={() => (loaded = false)}> Show me the dirt </button>
-				</div>
+			<div class="container login">
+				<h1>
+					Looks like there was a server error! If you're positive you got your password right,
+					please try again later!
+				</h1>
+				<button on:click={() => (loaded = false)}> Show me the dirt </button>
+			</div>				
+			<h2>{randomEmoji()}</h2>
 			{/await}
 		</div>
 	{:else}
@@ -168,6 +237,7 @@
 			<input bind:value={u} placeholder="username" />
 			<input bind:value={p} placeholder="password" type="password" />
 			<button on:click={() => (loaded = true)}> Show me the dirt </button>
+			<h2>{randomEmoji()}</h2>
 		</div>
 	{/if}
 </div>
@@ -188,25 +258,22 @@
 	}
 	.container {
 		width: 60%;
-	}
-	img {
-		width: 200px;
-		border-radius: 200px;
+		padding-top: 10rem;
 	}
 	input {
 		width: 80%;
 		margin-bottom: 2rem;
 		background-color: rgba(0, 0, 0, 0);
-		color: white;
+		color: rgb(42, 42, 42);
 		font-size: 2rem;
 		font-family: var(--serif-font);
-		border: 0px solid white;
-		border-bottom: 1px solid white;
+		border: 0px solid rgb(42, 42, 42);
+		border-bottom: 1px solid rgb(42, 42, 42);
 		text-align: center;
 	}
 	input:focus {
 		outline: none;
-		border-bottom: 1px solid aqua;
+		border-bottom: 1px solid rgb(152, 84, 84);
 	}
 	.login {
 		display: flex;
@@ -218,50 +285,55 @@
 		font-family: var(--sans-font);
 		font-size: 1.2rem;
 		border: 0px solid rgba(0, 0, 0, 0);
-		border-bottom: 2px solid white;
+		border-bottom: 2px solid rgb(42, 42, 42);
 		background-color: rgba(0, 0, 0, 0);
-		color: white;
+		color: rgb(42, 42, 42);
 	}
 	button:hover {
-		background-color: white;
-		color: rgba(22, 22, 22);
+		background-color: rgb(42, 42, 42);
+		color: rgb(152, 84, 84);
 	}
 	.wrapped {
 		display: flex;
 		flex-direction: column;
 	}
 	.wrapped-1 {
-		background-color: rgb(58, 177, 177);
+		background-color: #fec5bb;
 		padding: 30px;
 		text-align: center;
 		margin-bottom: 3rem;
+		border-radius: 50px;
 	}
 	.wrapped-2 {
-		background-color: rgb(98, 173, 148);
+		background-color: #e8e8e4;
 		padding: 30px;
 		text-align: center;
 		margin-bottom: 3rem;
+		border-radius: 50px;
 	}
 	.wrapped-3 {
-		background-color: brown;
+		background-color: #cdb4db;
 		padding: 30px;
 		display: flex;
 		margin-bottom: 3rem;
 		position: relative;
+		border-radius: 50px;
 	}
 	.wrapped-4 {
-		background-color: rgb(202, 108, 166);
+		background-color: #e9edc9;
 		padding: 30px;
 		display: flex;
 		margin-bottom: 3rem;
 		position: relative;
+		border-radius: 50px;
 	}
 	.wrapped-5 {
-		background-color: rgb(126, 182, 100);
+		background-color: #a9def9;
 		padding: 30px;
 		display: flex;
 		margin-bottom: 3rem;
 		position: relative;
+		border-radius: 50px;
 	}
 	.left {
 		position: absolute;
@@ -305,6 +377,15 @@
 	}
 	.size-5 {
 		font-size: 1.2rem;
+	}
+	img {
+		height: 100px;
+	}
+	.altImage {
+		border-radius: 100px;
+	}
+	.imgWrapper {
+		display: flex;
 	}
 
 	@media only screen and (max-width: 600px) {
