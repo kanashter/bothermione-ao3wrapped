@@ -4,7 +4,9 @@
 	let p;
 
 	async function getWrapped(u, p) {
-		let url = `http://127.0.0.1:5001/?username=${u}&password=${p}&start_date=2022-01-01&end_date=2022-12-31`;
+		let username = encodeURIComponent(u);
+		let password = encodeURIComponent(p);
+		let url = `http://127.0.0.1:5001/?username=${username}&password=${password}&start_date=2022-01-01&end_date=2022-12-31`;
 		let request = await fetch(url, {
 			method: 'get'
 		});
@@ -130,7 +132,7 @@
 		<p>
 			But, if you're feeling brave - please log in below and see all the grimy details about your
 			2022 on AO3
-		</p>	
+		</p>
 	</div>
 	{#if loaded == true}
 		<div class="container">
@@ -228,7 +230,7 @@
 					please try again later!
 				</h1>
 				<button on:click={() => (loaded = false)}> Show me the dirt </button>
-			</div>				
+			</div>
 			<h2>{randomEmoji()}</h2>
 			{/await}
 		</div>
